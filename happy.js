@@ -9,7 +9,7 @@
       el.before(errorEl)
     }
 
-    function removeError(errorEl){
+    function removeError(el, errorEl){
       var temp = errorEl.get(0);
       // this is for zepto
       if (temp.parentNode) { temp.parentNode.removeChild(temp); }
@@ -82,7 +82,7 @@
           (opts.errorPlacement || config.errorPlacement || errorPlacement)(el, errorEl);
           return false;
         } else {
-          (opts.removeError || config.removeError || removeError)(errorEl);
+          (opts.removeError || config.removeError || removeError)(el, errorEl);
           el.removeClass(invalid_class);
           return true;
         }
