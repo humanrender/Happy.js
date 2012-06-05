@@ -79,10 +79,10 @@
         
         if (error) {
           el.addClass('unhappy');
-          (opts.errorPlacement || errorPlacement)(el, errorEl);
+          (opts.errorPlacement || config.errorPlacement || errorPlacement)(el, errorEl);
           return false;
         } else {
-          (opts.removeError || removeError)(errorEl);
+          (opts.removeError || config.removeError || removeError)(errorEl);
           el.removeClass('unhappy');
           return true;
         }
