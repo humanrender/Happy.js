@@ -4,6 +4,16 @@
   }
   $.fn.isHappy = function (config) {
     var fields = [], item;
+
+    function errorPlacement(el, errorEl){
+      el.before(errorEl)
+    }
+
+    function removeError(errorEl){
+      var temp = errorEl.get(0);
+      // this is for zepto
+      if (temp.parentNode) { temp.parentNode.removeChild(temp); }
+    }
     
     function getError(error) {
       return $('<span id="'+error.id+'" class="unhappyMessage">'+error.message+'</span>');
@@ -68,14 +78,11 @@
         }
         
         if (error) {
-          el.addClass('unhappy').before(errorEl);
+          el.addClass('unhappy');
+          (opts.errorPlacement || errorPlacement)(el, errorEl);
           return false;
         } else {
-          temp = errorEl.get(0);
-          // this is for zepto
-          if (temp.parentNode) {
-            temp.parentNode.removeChild(temp);
-          }
+          (opts.removeError || removeError)(errorEl);
           el.removeClass('unhappy');
           return true;
         }
