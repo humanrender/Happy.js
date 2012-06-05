@@ -3,7 +3,7 @@
     return (''.trim) ? el.val().trim() : $.trim(el.val());
   }
   $.fn.isHappy = function (config) {
-    var fields = [], item;
+    var fields = [], item, invalid_class = (config.invalid_class || "unhappy");
 
     function errorPlacement(el, errorEl){
       el.before(errorEl)
@@ -16,7 +16,7 @@
     }
     
     function getError(error) {
-      return $('<span id="'+error.id+'" class="unhappyMessage">'+error.message+'</span>');
+      return $('<span id="'+error.id+'" class="'+invalid_class+'Message">'+error.message+'</span>');
     }
     function handleSubmit() {
       var errors = false, i, l;
@@ -40,7 +40,7 @@
       var field = $(selector),
         error = {
           message: opts.message,
-          id: selector.slice(1) + '_unhappy'
+          id: selector.slice(1) + '_' + invalid_class
         },
         errorEl = $(error.id).length > 0 ? $(error.id) : getError(error);
         
@@ -78,12 +78,12 @@
         }
         
         if (error) {
-          el.addClass('unhappy');
+          el.addClass(invalid_class);
           (opts.errorPlacement || config.errorPlacement || errorPlacement)(el, errorEl);
           return false;
         } else {
           (opts.removeError || config.removeError || removeError)(errorEl);
-          el.removeClass('unhappy');
+          el.removeClass(invalid_class);
           return true;
         }
       };
